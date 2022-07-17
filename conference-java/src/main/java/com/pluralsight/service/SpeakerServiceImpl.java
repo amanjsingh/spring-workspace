@@ -3,17 +3,24 @@ package com.pluralsight.service;
 import com.pluralsight.model.Speaker;
 import com.pluralsight.repository.HibernateSpeakerRepositoryImpl;
 import com.pluralsight.repository.SpeakerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("speakerService")
+//@Scope(BeanDefinition.SCOPE_SINGLETON)
 public class SpeakerServiceImpl implements SpeakerService {
 
     //    private SpeakerRepository repository = new HibernateSpeakerRepositoryImpl();
 
-    // Generate its Setter for Setter Injection
     private SpeakerRepository repository;
 
-//    For Constructor Injection
+    public SpeakerServiceImpl() {
+        System.out.println("No Argument Constructor");
+    }
     public SpeakerServiceImpl(SpeakerRepository repository) {
         this.repository = repository;
     }
@@ -22,9 +29,9 @@ public class SpeakerServiceImpl implements SpeakerService {
     public List<Speaker> findAll() {
         return repository.findAll();
     }
-
-//    For Setter Injection
+    @Autowired
     public void setRepository(SpeakerRepository repository) {
         this.repository = repository;
+        System.out.println("Repository Setter");
     }
 }
